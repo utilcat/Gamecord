@@ -1,6 +1,6 @@
 {
   "name": "@utilcat/arachne-gamecord",
-  "version": "4.2.2-alpha",
+  "version": "4.2.3-alpha-1",
   "description": "Fork of Discord Gamecord to support Arachne needs.",
   "main": "index.js",
   "scripts": {

@@ -113,9 +113,10 @@ module.exports = class FishyGame extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
-    .setDescription(fishes.map(fish => `> ${fish}`).join('\n') + `\n\n\u2000**${this.fishes.junk.emoji} Junk** — ${this.player.fishes.junk || 0}`)
+    .setImage(this.message.user.displayAvatarURL())
+    .setDescription(fishes + `\n\n\u2000**${this.fishes.junk.emoji} Junk** — ${this.player.fishes.junk || 0}`)
     .setTimestamp()
+    .setFooter({ text: `Current Balance: ${this.player.balance}` });
 
     return await this.sendMessage({ embeds: [embed] });
   }
