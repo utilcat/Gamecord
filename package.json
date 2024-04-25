@@ -1,7 +1,7 @@
 {
-  "name": "discord-gamecord",
+  "name": "@utilcat/arachne-gamecord",
   "version": "4.2.0",
-  "description": "Discord Gamecord is a powerful npm package with a collection of minigames for your discord bot",
+  "description": "Fork of Discord Gamecord to support Arachne needs.",
   "main": "index.js",
   "scripts": {
     "test": "cd test && node ."
@@ -17,15 +17,9 @@
     "type": "git",
     "url": "git+ssh://git@github.com/aniket091/Gamecord.git"
   },
-  "homepage": "https://discord-gamecord.js.org/",
   "keywords": [
-    "discord-gamecord",
-    "discord-games",
-    "discord.js",
-    "minigames"
   ],
   "bugs": {
-    "url": "https://github.com/aniket091/Gamecord/issues"
   },
   "directories": {
     "src": "src"
