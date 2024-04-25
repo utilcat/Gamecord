@@ -69,7 +69,7 @@ module.exports = class WouldYouRather extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(`1. ${this.data.option1} \n2. ${this.data.option2}`)
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
     .addFields({ name: 'Details', value: `**Title:** ${this.data.title}\n**Author:** ${this.data.author}` })
 
 
@@ -83,7 +83,7 @@ module.exports = class WouldYouRather extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id) {
+      if (btn.user.id !== this.message.author.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -105,7 +105,7 @@ module.exports = class WouldYouRather extends events {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
     .addFields({ name: 'Details', value: `**Title:** ${this.data.title}\n**Author:** ${this.data.author}` })
 
     if (result === '1') embed.setDescription(`**1. ${this.data.option1} (${prnt1}%)**\n2. ${this.data.option2} (${prnt2})%`);

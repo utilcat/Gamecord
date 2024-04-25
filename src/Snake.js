@@ -146,7 +146,7 @@ module.exports = class SnakeGame extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent())
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
 
 
     const up = new ButtonBuilder().setEmoji(emojis.up).setStyle('PRIMARY').setCustomId('snake_up');
@@ -176,7 +176,7 @@ module.exports = class SnakeGame extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent())
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
 
     return msg.edit({ embeds: [embed] });
   }
@@ -191,7 +191,7 @@ module.exports = class SnakeGame extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.overTitle)
     .setDescription('**Score:** ' + this.score + '\n\n' + this.getBoardContent(true))
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
@@ -202,7 +202,7 @@ module.exports = class SnakeGame extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id) {
+      if (btn.user.id !== this.message.author.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }

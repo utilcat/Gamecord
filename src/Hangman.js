@@ -96,7 +96,7 @@ module.exports = class Hangman extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
     .addFields({ name: `Word (${this.word.length})`, value: this.getWordEmojis() });
 
     const msg = await this.sendMessage({ embeds: [embed], components: this.getComponents() });
@@ -110,7 +110,7 @@ module.exports = class Hangman extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id) {
+      if (btn.user.id !== this.message.author.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -129,7 +129,7 @@ module.exports = class Hangman extends events {
       .setColor(this.options.embed.color)
       .setTitle(this.options.embed.title)
       .setDescription(this.getBoardContent())
-      .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
+      .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
       .addFields({ name: 'Letters Guessed', value: '`'+ this.guessed.join(', ') +'`' })
       .addFields({ name: `Word (${this.word.length})`, value: this.getWordEmojis() });
 
@@ -152,7 +152,7 @@ module.exports = class Hangman extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     if (this.guessed.length) embed.addFields({ name: 'Letters Guessed', value: '`'+ this.guessed.join(', ') +'`' });
     embed.addFields({ name: 'Game Over', value: GameOverMessage.replace('{word}', this.word) });

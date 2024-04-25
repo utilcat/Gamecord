@@ -63,10 +63,10 @@ module.exports = class Wordle extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setImage('attachment://wordle.png')
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     const msg = await this.sendMessage({ embeds: [embed], files: [await this.getBoardImage()] });
-    const filter = (m) => m.author.id === this.message.user.id && m.content.length === 5;
+    const filter = (m) => m.author.id === this.message.author.id && m.content.length === 5;
     const collector = this.message.channel.createMessageCollector({ idle: this.options.timeoutTime, filter: filter });
 
 
@@ -97,7 +97,7 @@ module.exports = class Wordle extends events {
     .setTitle(this.options.embed.title)
     .setImage('attachment://wordle.png')
     .addFields({ name: 'Game Over', value: GameOverMessage.replace('{word}', this.word) })
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL() });
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL() });
 
     return await msg.edit({ embeds: [embed], files: [await this.getBoardImage()] });
   }

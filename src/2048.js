@@ -85,7 +85,7 @@ module.exports = class TwoZeroFourEight extends events {
     .setColor(this.options.embed.color)
     .setImage('attachment://gameboard.png')
     .addFields({ name: 'Current Score', value: this.score.toString() })
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
 
     const up = new ButtonBuilder().setEmoji(this.options.emojis.up).setStyle(this.options.buttonStyle).setCustomId('2048_up');
@@ -116,7 +116,7 @@ module.exports = class TwoZeroFourEight extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id) {
+      if (btn.user.id !== this.message.author.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -136,7 +136,7 @@ module.exports = class TwoZeroFourEight extends events {
       .setColor(this.options.embed.color)
       .setImage('attachment://gameboard.png')
       .addFields({ name: 'Current Score', value: this.score.toString() })
-      .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+      .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
       return msg.edit({ embeds: [embed], files: [await this.getBoardImage()], attachments: [] });
     })
@@ -158,7 +158,7 @@ module.exports = class TwoZeroFourEight extends events {
     .setColor(this.options.embed.color)
     .setImage('attachment://gameboard.png')
     .addFields({ name: 'Total Score', value: this.score.toString() })
-    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components), files: [await this.getBoardImage()], attachments: [] });
   }

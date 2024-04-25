@@ -116,7 +116,6 @@ module.exports = class FishyGame extends events {
     .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
     .setDescription(fishes + `\n\n\u2000**${this.fishes.junk.emoji} Junk** — ${this.player.fishes.junk || 0}`)
     .setTimestamp()
-    //.setFooter({ text: `Current Balance: ${this.player.balance}` });
 
     return await this.sendMessage({ embeds: [embed] });
   }

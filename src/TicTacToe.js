@@ -90,7 +90,7 @@ module.exports = class TicTacToe extends approve {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setFooter({ text: this.message.user.tag + ' vs ' + this.opponent.tag })
+    .setFooter({ text: this.message.author.tag + ' vs ' + this.opponent.tag })
     .addFields({ name: this.options.embed.statusTitle, value: this.getTurnMessage() }) 
 
     await msg.edit({ content: null, embeds: [embed], components: this.getComponents() });
@@ -104,7 +104,7 @@ module.exports = class TicTacToe extends approve {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id && btn.user.id !== this.opponent.id) {
+      if (btn.user.id !== this.message.author.id && btn.user.id !== this.opponent.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -120,7 +120,7 @@ module.exports = class TicTacToe extends approve {
       const embed = new EmbedBuilder()
       .setColor(this.options.embed.color)
       .setTitle(this.options.embed.title)
-      .setFooter({ text: this.message.user.tag + ' vs ' + this.opponent.tag })
+      .setFooter({ text: this.message.author.tag + ' vs ' + this.opponent.tag })
       .addFields({ name: this.options.embed.statusTitle, value: this.getTurnMessage() }) 
 
       return await msg.edit({ embeds: [embed], components: this.getComponents() });
@@ -135,14 +135,14 @@ module.exports = class TicTacToe extends approve {
 
   async gameOver(msg, result) {
     const TicTacToeGame = { player: this.message.author, opponent: this.opponent, gameBoard: this.gameBoard };
-    if (result === 'win') TicTacToeGame.winner = this.hasWonGame(1) ? this.message.user.id : this.opponent.id;
+    if (result === 'win') TicTacToeGame.winner = this.hasWonGame(1) ? this.message.author.id : this.opponent.id;
     this.emit('gameOver', { result: result, ...TicTacToeGame });
 
 
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setFooter({ text: this.message.user.tag + ' vs ' + this.opponent.tag })
+    .setFooter({ text: this.message.author.tag + ' vs ' + this.opponent.tag })
     .addFields({ name: this.options.embed.overTitle, value: this.getTurnMessage(result + 'Message') })
 
     return await msg.edit({ embeds: [embed], components: disableButtons(this.getComponents()) });

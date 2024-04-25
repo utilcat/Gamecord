@@ -105,7 +105,7 @@ module.exports = class Connect4 extends approve {
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
     .addFields({ name: this.options.embed.statusTitle, value: this.getTurnMessage() })
-    .setFooter({ text: `${this.message.user.tag} vs ${this.opponent.tag}` })
+    .setFooter({ text: `${this.message.author.tag} vs ${this.opponent.tag}` })
 
 
     const btn1 = new ButtonBuilder().setStyle(this.options.buttonStyle).setEmoji('1️⃣').setCustomId('connect4_1');
@@ -128,7 +128,7 @@ module.exports = class Connect4 extends approve {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id && btn.user.id !== this.opponent.id) {
+      if (btn.user.id !== this.message.author.id && btn.user.id !== this.opponent.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -164,7 +164,7 @@ module.exports = class Connect4 extends approve {
       .setTitle(this.options.embed.title)
       .setDescription(this.getBoardContent())
       .addFields({ name: this.options.embed.statusTitle, value: this.getTurnMessage() })
-      .setFooter({ text: `${this.message.user.tag} vs ${this.opponent.tag}` })
+      .setFooter({ text: `${this.message.author.tag} vs ${this.opponent.tag}` })
 
       return await msg.edit({ embeds: [embed], components: msg.components });
     })
@@ -179,7 +179,7 @@ module.exports = class Connect4 extends approve {
 
   async gameOver(msg, result) {
     const Connect4Game = { player: this.message.author, opponent: this.opponent };
-    if (result === 'win') Connect4Game.winner = this.player1Turn ? this.message.user.id : this.opponent.id;
+    if (result === 'win') Connect4Game.winner = this.player1Turn ? this.message.author.id : this.opponent.id;
     this.emit('gameOver',  { result: result, ...Connect4Game });
 
 
@@ -188,7 +188,7 @@ module.exports = class Connect4 extends approve {
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
     .addFields({ name: this.options.embed.statusTitle, value: this.getTurnMessage(result + 'Message') })
-    .setFooter({ text: `${this.message.user.tag} vs ${this.opponent.tag}` })
+    .setFooter({ text: `${this.message.author.tag} vs ${this.opponent.tag}` })
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }

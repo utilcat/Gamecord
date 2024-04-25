@@ -87,7 +87,7 @@ module.exports = class Flood extends events {
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
     .addFields({ name: 'Turns', value: `${this.turns}/${this.maxTurns}` })
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     
     const btn1 = new ButtonBuilder().setStyle(this.options.buttonStyle).setEmoji(squares[0]).setCustomId('flood_0');
@@ -103,7 +103,7 @@ module.exports = class Flood extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.user.id) {
+      if (btn.user.id !== this.message.author.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -118,7 +118,7 @@ module.exports = class Flood extends events {
       .setTitle(this.options.embed.title)
       .setDescription(this.getBoardContent())
       .addFields({ name: 'Turns', value: `${this.turns}/${this.maxTurns}` })
-      .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+      .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
       return await msg.edit({ embeds: [embed], components: [row] });
     })
@@ -141,7 +141,7 @@ module.exports = class Flood extends events {
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
     .addFields({ name: 'Game Over', value: GameOverMessage.replace('{turns}', this.turns) })
-    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
+    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
 
     return msg.edit({ embeds: [embed], components: disableButtons(msg.components) });
   }
