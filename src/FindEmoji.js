@@ -76,7 +76,7 @@ module.exports = class FindEmoji extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.options.embed.description)
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
     const msg = await this.sendMessage({ embeds: [embed], components: this.getComponents(true) });
 
 
@@ -88,7 +88,7 @@ module.exports = class FindEmoji extends events {
 
       collector.on('collect', async (btn) => {
         await btn.deferUpdate().catch(e => {});
-        if (btn.user.id !== this.message.author.id) {
+        if (btn.user.id !== this.message.user.id) {
           if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
           return;
         }
@@ -115,7 +115,7 @@ module.exports = class FindEmoji extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.options[resultMessage+'Message'].replace('{emoji}', this.emoji))
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
 
     return msg.edit({ embeds: [embed], components: disableButtons(this.getComponents(true)) });
   }

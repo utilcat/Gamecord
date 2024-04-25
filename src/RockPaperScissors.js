@@ -99,7 +99,7 @@ module.exports = class RPSGame extends approve {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.options.embed.description)
-    .setFooter({ text: this.message.author.tag + ' vs ' + this.opponent.tag })
+    .setFooter({ text: this.message.user.tag + ' vs ' + this.opponent.tag })
 
 
     const r = new ButtonBuilder().setStyle(this.options.buttonStyle).setEmoji(choice.r).setCustomId('rps_r').setLabel(labels.rock);
@@ -113,13 +113,13 @@ module.exports = class RPSGame extends approve {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.author.id && btn.user.id !== this.opponent.id) {
+      if (btn.user.id !== this.message.user.id && btn.user.id !== this.opponent.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
 
 
-      if (btn.user.id === this.message.author.id && !this.playerPick) {
+      if (btn.user.id === this.message.user.id && !this.playerPick) {
         this.playerPick = choice[btn.customId.split('_')[1]];
         btn.followUp({ content: this.options.pickMessage.replace('{emoji}', this.playerPick), ephemeral: true });
       } 
@@ -150,7 +150,7 @@ module.exports = class RPSGame extends approve {
 
   async gameOver(msg, result) {
     const RPSGame = { player: this.message.author, opponent: this.opponent, playerPick: this.playerPick, opponentPick: this.opponentPick };
-    if (result === 'win') RPSGame.winner = this.player1Won() ? this.message.author.id : this.opponent.id;
+    if (result === 'win') RPSGame.winner = this.player1Won() ? this.message.user.id : this.opponent.id;
     this.emit('gameOver', { result, ...RPSGame });
     this.player1Turn = this.player1Won();
 
@@ -158,9 +158,9 @@ module.exports = class RPSGame extends approve {
     const embed = new EmbedBuilder()
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
-    .setFooter({ text: this.message.author.tag + ' vs ' + this.opponent.tag })
+    .setFooter({ text: this.message.user.tag + ' vs ' + this.opponent.tag })
     .setDescription(this.formatTurnMessage(this.options, result+'Message'))
-    .addFields({ name: this.message.author.username, value: this.playerPick ?? '❔', inline: true })
+    .addFields({ name: this.message.user.username, value: this.playerPick ?? '❔', inline: true })
     .addFields({ name: 'VS', value: '⚡', inline: true })
     .addFields({ name: this.opponent.username, value: this.opponentPick ?? '❔', inline: true })
     

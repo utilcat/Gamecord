@@ -62,7 +62,7 @@ module.exports = class Slots extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent())
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
     const msg = await this.sendMessage({ embeds: [embed] });
     
 
@@ -86,7 +86,7 @@ module.exports = class Slots extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(this.getBoardContent(true))
-    .setFooter({ text: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setFooter({ text: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
 
     return msg.edit({ embeds: [embed] });
   }

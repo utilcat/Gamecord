@@ -59,13 +59,13 @@ module.exports = class GuessThePokemon extends events {
     .setImage('attachment://question-image.png')
     .addFields({ name: 'Types', value: this.pokemon.types.join(', ') ?? 'No Data', inline: true })
     .addFields({ name: 'Abilities', value: this.pokemon.abilities.join(', ') ?? 'No Data', inline: true })
-    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
 
 
     const attachment = new AttachmentBuilder(this.pokemon.questionImage, { name: 'question-image.png' });
     const msg = await this.sendMessage({ embeds: [embed], files: [attachment] });
 
-    const filter = (m) => m.author.id === this.message.author.id;
+    const filter = (m) => m.author.id === this.message.user.id;
     const collector = this.message.channel.createMessageCollector({ idle: this.options.timeoutTime, filter: filter });
 
 
@@ -92,7 +92,7 @@ module.exports = class GuessThePokemon extends events {
     .setImage('attachment://answer-image.png')
     .addFields({ name: 'Types', value: this.pokemon.types.join(', ') ?? 'No Data', inline: true })
     .addFields({ name: 'Abilities', value: this.pokemon.abilities.join(', ') ?? 'No Data', inline: true })
-    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) });
+    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) });
 
     const attachment = new AttachmentBuilder(this.pokemon.answerImage, { name: 'answer-image.png' });
     return msg.edit({ content: this.options.winMessage.replace('{pokemon}', this.pokemon.name), embeds: [embed], files: [attachment] });

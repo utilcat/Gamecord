@@ -80,7 +80,7 @@ module.exports = class Trivia extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(`**${this.trivia.question}**\n\n**Difficulty:** ${this.trivia.difficulty}\n**Category:** ${this.trivia.category}`)
-    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
     .addFields({ name: '\u200b', value: this.options.embed.description });
 
     const msg = await this.sendMessage({ embeds: [embed], components: this.getComponents() });
@@ -89,7 +89,7 @@ module.exports = class Trivia extends events {
 
     collector.on('collect', async btn => {
       await btn.deferUpdate().catch(e => {});
-      if (btn.user.id !== this.message.author.id) {
+      if (btn.user.id !== this.message.user.id) {
         if (this.options.playerOnlyMessage) btn.followUp({ content: formatMessage(this.options, 'playerOnlyMessage'), ephemeral: true });
         return;
       }
@@ -114,7 +114,7 @@ module.exports = class Trivia extends events {
     .setColor(this.options.embed.color)
     .setTitle(this.options.embed.title)
     .setDescription(`**${this.trivia.question}**\n\n**Difficulty:** ${this.trivia.difficulty}\n**Category:** ${this.trivia.category}`)
-    .setAuthor({ name: this.message.author.tag, iconURL: this.message.author.displayAvatarURL({ dynamic: true }) })
+    .setAuthor({ name: this.message.user.tag, iconURL: this.message.user.displayAvatarURL({ dynamic: true }) })
     .addFields({ name: '\u200b', value: this.options.embed.description });
 
     return await msg.edit({ content: GameOverMessage.replace('{answer}', this.trivia.answer), embeds: [embed], components: disableButtons(this.getComponents(true)) });
